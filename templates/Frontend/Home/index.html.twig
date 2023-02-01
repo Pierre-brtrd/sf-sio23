@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Homepage
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<h1>Hello World</h1>
+	{% for item in data %}
+		{{ item }}
+	{% endfor %}
+{% endblock %}
