@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Admin des articles
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<h1 class="text-center">Administration des articles</h1>
+		<a href="{{ path('admin.article.create') }}" class="btn btn-primary">
+			<i class="bi bi-plus"></i>
+			Créer un article
+		</a>
+		{{ dump(articles) }}
+	</section>
+{% endblock %}

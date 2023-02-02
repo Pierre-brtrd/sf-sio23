@@ -16,7 +16,9 @@
 		{% endblock %}
 	</head>
 	<body>
+		{% include "Layout/header.html.twig" %}
 		<main>
+			{% include "Layout/flash.html.twig" %}
 			{% block body %}{% endblock %}
 		</main>
 		{% block javascripts %}

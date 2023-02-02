@@ -1,0 +1,41 @@
+<header>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="{{ path('app.front.home') }}">My app Symfony</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Articles</a>
+					</li>
+				</ul>
+				{% if app.user %}
+					<div class="navbar-btn">
+						<a href="{{ path('logout') }}" class="btn btn-danger text-light">
+							<i class="bi bi-door-open-fill"></i>
+							Se deconnecter
+						</a>
+					</div>
+				{% else %}
+					<div class="navbar-btn me-2">
+						<a href="#" class="btn btn-light">
+							<i class="bi bi-person-plus"></i>
+							S'inscrire
+						</a>
+					</div>
+					<div class="navbar-btn">
+						<a href="{{ path('app.login') }}" class="btn btn-secondary">
+							<i class="bi bi-box-arrow-in-right"></i>
+							Se connecter
+						</a>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</nav>
+</header>
