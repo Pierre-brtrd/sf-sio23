@@ -1,0 +1,19 @@
+<div class="blog-card">
+	{% if article.imageName %}
+		<a href="#">
+			<div class="blog-card-image">
+				<img src="{{ vich_uploader_asset(article) }}" alt="{{ article.title }}">
+			</div>
+		</a>
+	{% endif %}
+	<div class="blog-card-content">
+		<p class="blog-card-date">
+			<i class="bi bi-calendar2-week-fill"></i>
+			{{ article.createdAt|format_datetime('full', 'none') }}
+		</p>
+		<a href="#">
+			<h2 class="blog-card-header">{{ article.title }}</h2>
+		</a>
+		<p class="blog-card-description">{{ article.content|slice(0,100) ~ '...' }}</p>
+	</div>
+</div>
