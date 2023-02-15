@@ -1,0 +1,39 @@
+.blog-list {
+    @include flexbox(space-between, stretch);
+
+    width: 90%;
+    margin: auto;
+}
+
+.blog-card {
+    margin-top: 4em;
+    width: 30%;
+    display: inline-block;
+    margin-bottom: 30px;
+    border-radius: $border-radius;
+    background: $white;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+    &-image {
+        overflow: hidden;
+        margin: -60px 15px 15px;
+        border-radius: $border-radius;
+        box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12),
+            0 8px 10px -5px rgba(0, 0, 0, 0.2);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &-content {
+        padding: 1em 2em;
+        margin-bottom: 0;
+
+        .blog-card-date {
+            margin-bottom: 0;
+        }
+    }
+}
