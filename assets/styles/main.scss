@@ -8,6 +8,14 @@
 // Import mixins
 @import "./_mixins.scss";
 
+// Import structure
 @import "./_structure.scss";
+
+// Import blog card
 @import "./Components/blog-card.scss";
+
+// Import banner
 @import "./Components/banner.scss";
+
+// Import article style
+@import "./Article/article.scss";

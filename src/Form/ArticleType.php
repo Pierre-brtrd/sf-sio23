@@ -11,6 +11,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ArticleType extends AbstractType
@@ -38,6 +39,7 @@ class ArticleType extends AbstractType
                 'multiple' => true,
                 'expanded' => false,
                 'autocomplete' => true,
+                'required' => false,
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu',
@@ -54,6 +56,10 @@ class ArticleType extends AbstractType
                 'label' => 'Image',
                 'allow_delete' => true,
                 'delete_label' => 'Supprimer l\'image',
+            ])
+            ->add('enabled', CheckboxType::class, [
+                'label' => 'Actif',
+                'required' => false,
             ]);
     }
 

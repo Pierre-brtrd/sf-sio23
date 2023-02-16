@@ -1,0 +1,33 @@
+.article-main-content {
+    @include flexbox(space-between, flex-start);
+
+    .sidebar {
+        flex: 0 0 30%;
+        position: sticky;
+        display: block;
+        top: 4.5rem;
+        height: 100vh;
+        overflow: scroll;
+
+        .sidebar-content {
+            .article-tag {
+                .list-tag {
+                    @include flexbox(flex-start, flex-start, 1em 0.5em);
+                    margin-top: 1em;
+
+                    .tag {
+                        background: $secondary;
+                        padding: 5px 10px;
+                        border-radius: $border-radius;
+                        color: $white;
+                        box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
+                    }
+                }
+            }
+        }
+    }
+
+    .article-content {
+        flex: 0 0 65%;
+    }
+}

@@ -14,8 +14,7 @@
 		<a href="{{ path('app.article.show', {slug: article.slug}) }}">
 			<h2 class="blog-card-header">{{ article.title }}</h2>
 		</a>
-		<p class="blog-card-description">{{ article.content|slice(0,100) ~ '...' }}</p>
-
+		<p class="blog-card-description">{{ article.content|striptags|slice(0,100) ~ '...' }}</p>
 		{% for categorie in article.categories %}
 			<em class="text-muted">#{{ categorie.title }}</em>
 		{% endfor %}

@@ -7,5 +7,11 @@
 
 {% block body %}
 	{% include 'Frontend/Article/_banner.html.twig' %}
-	{{ dump(article) }}
+
+	<section class="container mt-4 article">
+		<div class="article-main-content">
+			{% include 'Frontend/Article/_sidebar.html.twig' %}
+			{% include 'Frontend/Article/_content.html.twig' %}
+		</div>
+	</section>
 {% endblock %}
