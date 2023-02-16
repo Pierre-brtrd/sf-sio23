@@ -51,6 +51,9 @@ class Article
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'articles')]
     private Collection $categories;
 
+    #[ORM\Column]
+    private ?bool $enabled = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -187,6 +190,18 @@ class Article
         if ($this->categories->removeElement($category)) {
             $category->removeArticle($this);
         }
+
+        return $this;
+    }
+
+    public function isEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }

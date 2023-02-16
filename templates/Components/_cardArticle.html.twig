@@ -15,8 +15,13 @@
 			<h2 class="blog-card-header">{{ article.title }}</h2>
 		</a>
 		<p class="blog-card-description">{{ article.content|slice(0,100) ~ '...' }}</p>
+
+		{% for categorie in article.categories %}
+			<em class="text-muted">#{{ categorie.title }}</em>
+		{% endfor %}
+
 		{% if app.request.get('_route') == 'admin.article.index' %}
-			<div class="row">
+			<div class="row mt-4">
 				<div class="col-md-6">
 					<a href="{{ path('admin.article.update', {id: article.id}) }}" class="btn btn-warning">
 						<i class="bi bi-pencil-square"></i>
