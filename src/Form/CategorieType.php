@@ -22,7 +22,8 @@ class CategorieType extends AbstractType
                 ]
             ])
             ->add('enabled', CheckboxType::class, [
-                'label' => 'Actif'
+                'label' => 'Actif',
+                'required' => false,
             ]);
     }
 

@@ -69,6 +69,13 @@ a {
     text-decoration: none;
 }
 
+img,
+svg,
+figure,
+video {
+    max-width: 100%;
+}
+
 .btn-primary {
     color: $white !important;
     background-color: $secondary;

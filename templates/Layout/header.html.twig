@@ -15,6 +15,30 @@
 					</li>
 				</ul>
 				{% if app.user %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<div class="navbar-btn me-2">
+							<div class="dropdown open">
+								<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="bi bi-tools"></i>
+									Admin
+								</button>
+								<div class="dropdown-menu" aria-labelledby="triggerId">
+									<a class="dropdown-item" href="{{ path('admin.article.index') }}">
+										<i class="bi bi-newspaper"></i>
+										Articles
+									</a>
+									<a class="dropdown-item" href="{{ path('admin.categorie.index') }}">
+										<i class="bi bi-tags-fill"></i>
+										Catégorie
+									</a>
+									<a class="dropdown-item" href="#">
+										<i class="bi bi-person-gear"></i>
+										Utilisateurs
+									</a>
+								</div>
+							</div>
+						</div>
+					{% endif %}
 					<div class="navbar-btn">
 						<a href="{{ path('logout') }}" class="btn btn-danger text-light">
 							<i class="bi bi-door-open-fill"></i>
