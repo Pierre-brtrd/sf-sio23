@@ -18,7 +18,7 @@ class FrontController extends AbstractController
     public function index(): Response
     {
         return $this->render('Frontend/Home/index.html.twig', [
-            'articles' => $this->repoArticle->findEnableOrderByDateWithLimit(3),
+            'articles' => $this->repoArticle->findEnableOrderByDate(3),
         ]);
     }
 }

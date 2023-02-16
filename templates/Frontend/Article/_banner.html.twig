@@ -1,0 +1,5 @@
+<div class="banner{{ article.imageName ? '-image' }}" {% if article.imageName %} style="background-image: url('{{ vich_uploader_asset(article) }}')" {% endif %}>
+	<div class="banner-header">
+		<h1>{{ article.title }}</h1>
+	</div>
+</div>

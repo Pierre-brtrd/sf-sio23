@@ -40,17 +40,22 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     /**
-     * Recherche des derniers articles avec limite
+     * Recherche des derniers articles avec limite (non obligatoire)
      *
-     * @param integer $max Nombre maximum de résultats
+     * @param integer $max Nombre maximum de résultats (facultatif)
      * @return array
      */
-    public function findEnableOrderByDateWithLimit(int $max): array
+    public function findEnableOrderByDate(?int $max = null): array
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.enabled  = true')
-            ->orderBy('a.createdAt', 'DESC')
-            ->setMaxResults($max)
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.enabled = true')
+            ->orderBy('a.createdAt', 'DESC');
+
+        if ($max) {
+            $query->setMaxResults($max);
+        }
+
+        return $query
             ->getQuery()
             ->getResult();
     }

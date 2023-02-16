@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ article.title }}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	{% include 'Frontend/Article/_banner.html.twig' %}
+	{{ dump(article) }}
+{% endblock %}

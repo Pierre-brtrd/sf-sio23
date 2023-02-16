@@ -1,0 +1,6 @@
+.banner-image {
+    @include flexbox(center, center);
+    height: calc(90vh - 60px);
+    background-size: cover;
+    background-position: center;
+}
