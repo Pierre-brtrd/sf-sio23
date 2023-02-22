@@ -19,6 +19,10 @@
 			<em class="text-muted">#{{ categorie.title }}</em>
 		{% endfor %}
 
+		<div class="author mt-2">
+			<i class="bi bi-person-circle"></i>
+			{{ article.author.fullName }}
+		</div>
 		{% if app.request.get('_route') == 'admin.article.index' %}
 			<div class="row mt-4">
 				<div class="col-md-6">
