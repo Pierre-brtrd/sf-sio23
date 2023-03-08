@@ -3,7 +3,11 @@
 namespace App\Controller\Frontend;
 
 use App\Entity\Article;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,7 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ArticleController extends AbstractController
 {
     public function __construct(
-        private readonly ArticleRepository $repo
+        private readonly ArticleRepository $repo,
+        private readonly CommentRepository $repoComment
     ) {
     }
 
@@ -25,8 +30,8 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{slug}', name: 'app.article.show', methods: ['GET'])]
-    public function details(?Article $article): Response|RedirectResponse
+    #[Route('/details/{slug}', name: 'app.article.show', methods: ['GET', 'POST'])]
+    public function details(?Article $article, Request $request): Response|RedirectResponse
     {
         if (!$article instanceof Article) {
             $this->addFlash('error', 'Article non trouvé, vérifiez votre url');
@@ -34,8 +39,28 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('app.article.index');
         }
 
+        $comment = new Comment();
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setUser($this->getUser())
+                ->setArticle($article)
+                ->setEnabled(true);
+
+            $this->repoComment->save($comment, true);
+
+            $this->addFlash('success', 'Votre commentaire a été posté avec succès');
+
+            return $this->redirectToRoute('app.article.show', [
+                'slug' => $article->getSlug()
+            ], 301);
+        }
+
         return $this->render('Frontend/Article/show.html.twig', [
             'article' => $article,
+            'form' => $form,
         ]);
     }
 }

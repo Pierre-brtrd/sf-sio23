@@ -1,3 +1,7 @@
-<article class="article-content">
-	{{ article.content|raw }}
-</article>
+<div class="article-content">
+	<article>
+		{{ article.content|raw }}
+	</article>
+	{% include 'Frontend/Article/Commentaires/_formComment.html.twig' with {button_label: 'Commenter'} %}
+	{% include 'Frontend/Article/Commentaires/_comments.html.twig' %}
+</div>

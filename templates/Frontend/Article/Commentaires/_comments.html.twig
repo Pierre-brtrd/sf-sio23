@@ -1,0 +1,22 @@
+{% if article.comments is not empty %}
+	{% set sortArticle = article.comments|sort((a,b) => a.createdAt <=> b.createdAt)|reverse %}
+
+	{% if sidebar is defined %}
+		{% set title = article.comments|length > 1 ? 'Derniers commentaires' : 'Dernier commentaire' %}
+		{% set comments = sortArticle|slice(0, 3) %}
+	{% else %}
+		{% set title = article.comments|length > 1 ? 'Commentaires' : 'Commentaire' %}
+		{% set comments = sortArticle %}
+	{% endif %}
+
+	<div class="show-comments mt-4">
+		<h2>{{ title }}</h2>
+		<div class="{{ sidebar is not defined ? 'comments-list' : 'sidebar-list' }}">
+			{% for comment in comments %}
+				{% if comment.enabled %}
+					{% include 'Frontend/Article/Commentaires/_cardComment.html.twig' %}
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}
