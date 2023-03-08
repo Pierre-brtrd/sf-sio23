@@ -3,8 +3,10 @@
 namespace App\Controller\Backend;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ArticleController extends AbstractController
 {
     public function __construct(
-        private readonly ArticleRepository $repo
+        private readonly ArticleRepository $repo,
+        private readonly CommentRepository $commentRepo,
     ) {
     }
 
@@ -87,5 +90,57 @@ class ArticleController extends AbstractController
         $this->addFlash('error', 'invalid token');
 
         return $this->redirectToRoute('admin.article.index');
+    }
+
+    #[Route('/{id}/comments', name: "admin.comment.index", methods: ['POST', 'GET'])]
+    public function comments(?Article $article): Response|RedirectResponse
+    {
+        if (!$article instanceof Article) {
+            $this->addFlash('error', 'Article non trouvé');
+
+            return $this->redirectToRoute('admin.article.index');
+        }
+
+        return $this->render('Backend/Article/Comments/index.html.twig', [
+            'article' => $article,
+        ]);
+    }
+
+    #[Route('/comment/{id}/delete', name: "admin.comment.delete", methods: ['POST', 'DELETE'])]
+    public function deleteComment(?Comment $comment, Request $req): RedirectResponse
+    {
+        if (!$comment instanceof Comment) {
+            $this->addFlash('error', 'Commentaire non trouvé');
+
+            return $this->redirectToRoute('admin.article.index');
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $req->get('_token'))) {
+            $this->commentRepo->remove($comment, true);
+
+            $this->addFlash('success', 'Commentaire supprimé avec succès');
+
+            return $this->redirectToRoute('admin.comment.index', [
+                'id' => $comment->getArticle()->getId(),
+            ]);
+        }
+
+        $this->addFlash('error', 'Une erreur est survenue, veuillez réessayer');
+
+        return $this->redirectToRoute('admin.comment.index', [
+            'id' => $comment->getArticle()->getId(),
+        ]);
+    }
+
+    #[Route('/comments/{id}/switch', name: 'admin.comment.switch', methods: ['GET'])]
+    public function switchVisibility(?Comment $comment): Response
+    {
+        if (!$comment instanceof Comment) {
+            return new Response('ERREUR', 404);
+        }
+        $comment->setEnabled(!$comment->isEnabled());
+        $this->commentRepo->save($comment, true);
+
+        return new Response('Visibility changed', 201);
     }
 }

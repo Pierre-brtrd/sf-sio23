@@ -34,6 +34,13 @@
 				<div class="col-md-6">
 					{% include 'Backend/Article/_formDelete.html.twig' %}
 				</div>
+				{% if article.comments|length > 0 %}
+					<div class="col-md-12 mt-2">
+						<a href="{{ path('admin.comment.index', {id: article.id}) }}" class="btn btn-info">
+							<i class="bi bi-chat"></i>
+							Commentaires</a>
+					</div>
+				{% endif %}
 			</div>
 		{% endif %}
 	</div>
