@@ -55,7 +55,7 @@ class ArticleType extends AbstractType
                 'delete_empty' => true,
                 'prototype' => true,
                 'by_reference' => false,
-                'label' => 'Images'
+                'label' => false,
             ])
             ->add('enabled', CheckboxType::class, [
                 'label' => 'Actif',

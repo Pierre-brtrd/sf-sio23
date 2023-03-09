@@ -9,10 +9,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use App\Entity\Traits\EnabledEntityTrait;
 use App\Entity\Traits\DateTimeEntityTrait;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[UniqueEntity(
+    fields: ['title'],
+    message: 'Ce titre est déjà utilisé par un autre article'
+)]
 class Article
 {
     use DateTimeEntityTrait,
@@ -24,6 +29,11 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
@@ -31,6 +41,11 @@ class Article
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(
+        min: 5,
+        minMessage: 'La taille du contenu doit être supérieur à {{ limit }} caractères.'
+    )]
     private ?string $content = null;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'articles')]
