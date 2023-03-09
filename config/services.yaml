@@ -22,3 +22,15 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Fixtures\Providers\HashPasswordProvider:
+        tags: [{ name: nelmio_alice.faker.provider }]
+
+    App\Fixtures\Providers\TagProvider:
+        tags: [{ name: nelmio_alice.faker.provider }]
+
+    App\Fixtures\Providers\ArticleProvider:
+        tags: [{ name: nelmio_alice.faker.provider }]
+
+    App\Fixtures\Providers\ImageProvider:
+        tags: [{ name: nelmio_alice.faker.provider }]
