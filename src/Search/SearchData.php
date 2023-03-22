@@ -8,6 +8,13 @@ namespace App\Search;
 class SearchData
 {
     /**
+     * Filter for the number of page results
+     *
+     * @var integer|null
+     */
+    private ?int $page = 1;
+
+    /**
      * Filter for text query on title article
      *
      * @var string|null
@@ -90,6 +97,30 @@ class SearchData
     public function setQuery(?string $query): self
     {
         $this->query = $query;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of page
+     *
+     * @return ?int
+     */
+    public function getPage(): ?int
+    {
+        return $this->page;
+    }
+
+    /**
+     * Set the value of page
+     *
+     * @param ?int $query
+     *
+     * @return self
+     */
+    public function setPage(?int $page): self
+    {
+        $this->page = $page;
 
         return $this;
     }

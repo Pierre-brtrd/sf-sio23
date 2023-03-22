@@ -27,7 +27,8 @@ class ArticleController extends AbstractController
     #[Route('', name: 'app.article.index', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        $data = new SearchData();
+        $data = (new SearchData())
+            ->setPage($request->get('page', 1));
 
         $form = $this->createForm(SearchArticleType::class, $data);
         $form->handleRequest($request);
