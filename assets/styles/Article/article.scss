@@ -1,3 +1,11 @@
+.form-filter {
+    .filter-choice {
+        .form-check {
+            @include flexbox(flex-start, center, 5px);
+        }
+    }
+}
+
 .article-main-content {
     @include flexbox(space-between, flex-start);
 

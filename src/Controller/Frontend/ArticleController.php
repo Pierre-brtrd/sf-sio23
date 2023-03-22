@@ -5,6 +5,8 @@ namespace App\Controller\Frontend;
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Search\SearchData;
+use App\Form\SearchArticleType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +24,17 @@ class ArticleController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'app.article.index', methods: ['GET'])]
-    public function index(): Response
+    #[Route('', name: 'app.article.index', methods: ['GET'])]
+    public function index(Request $request): Response
     {
+        $data = new SearchData();
+
+        $form = $this->createForm(SearchArticleType::class, $data);
+        $form->handleRequest($request);
+
         return $this->render('Frontend/Article/index.html.twig', [
-            'articles' => $this->repo->findEnableOrderByDate()
+            'articles' => $this->repo->findSearchData($data),
+            'form' => $form,
         ]);
     }
 

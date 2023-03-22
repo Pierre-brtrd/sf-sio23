@@ -1,0 +1,13 @@
+{{ form_start(form, {'attr': {'class': 'form-filter card p-3'}}) }}
+
+{{ form_row(form.query) }}
+
+<h3 class="mb-2">Catégories</h3>
+{{ form_row(form.tags, {'attr': {'class': 'filter-choice d-flex flex-wrap gap-2'}}) }}
+
+<h3 class="mb-2">Auteurs</h3>
+{{ form_row(form.authors, {'attr': {'class': 'filter-choice d-flex flex-wrap gap-2'}}) }}
+
+<button type="submit" class="btn btn-primary">Filtrer</button>
+
+{{ form_end(form, {render_rest: false}) }}

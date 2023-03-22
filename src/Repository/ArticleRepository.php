@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Search\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -53,6 +54,35 @@ class ArticleRepository extends ServiceEntityRepository
 
         if ($max) {
             $query->setMaxResults($max);
+        }
+
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findSearchData(SearchData $search): array
+    {
+        $query = $this->createQueryBuilder('a')
+            ->select('a', 'u', 'c', 'i')
+            ->join('a.author', 'u')
+            ->leftJoin('a.categories', 'c')
+            ->leftJoin('a.images', 'i');
+
+        /* On filtre sur le titre de l'article si $search->getQuery() n'est pas vide */
+        if (!empty($search->getQuery())) {
+            $query->andWhere('a.title LIKE :title')
+                ->setParameter('title', "%{$search->getQuery()}%");
+        }
+
+        if (!empty($search->getTags())) {
+            $query->andWhere('c.id IN (:tags)')
+                ->setParameter('tags', $search->getTags());
+        }
+
+        if (!empty($search->getAuthors())) {
+            $query->andWhere('u.id IN (:authors)')
+                ->setParameter('authors', $search->getAuthors());
         }
 
         return $query

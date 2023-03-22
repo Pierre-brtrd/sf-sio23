@@ -6,12 +6,17 @@
 {% endblock %}
 
 {% block body %}
-	<section class="container mt-4">
+	<section class="container mt-4 js-filter">
 		<h1 class="text-center mb-4">Découvrez nos articles</h1>
-		<div class="blog-list">
-			{% for article in articles %}
-				{% include 'Components/_cardArticle.html.twig' %}
-			{% endfor %}
+		<div class="row">
+			<div class="col-md-3">
+				{% include 'Components/_filter.html.twig' with {form: form} only %}
+			</div>
+			<div class="col-md-9">
+				<div class="blog-list">
+					{% include 'Components/_articles.html.twig' %}
+				</div>
+			</div>
 		</div>
 	</section>
 {% endblock %}
