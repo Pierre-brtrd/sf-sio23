@@ -1,4 +1,6 @@
 {
+    "name": "pierre-brtrd/sf_sio_23",
+    "description": "Project symfoony 6 with SIO 23",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
