@@ -1,4 +1,5 @@
 import { debounce } from "lodash";
+import { Flipper, spring } from 'flip-toolkit';
 
 /**
  * Class Filter for search article in AJAX
@@ -63,6 +64,8 @@ export default class Filter {
             input.addEventListener('change', this.loadForm.bind(this));
         });
 
+        this.form.querySelector('#btn-reset-filter').addEventListener('click', this.resetForm.bind(this));
+
         /* Si moreNav à true, on remplace la pagination par un bouton voir plus */
         if (this.moreNav) {
             this.pagination.innerHTML = '<button class="btn btn-primary btn-show-more text-light">Voir Plus</button>';
@@ -70,6 +73,21 @@ export default class Filter {
         } else {
             this.pagination.addEventListener('click', linkClickListener);
         }
+    }
+
+    async resetForm() {
+        /* On récupère l'url de destination pour construire l'url en ajoutant les paramètres par la suite */
+        const url = new URL(this.form.getAttribute('action') || window.location.href);
+
+        this.form.querySelectorAll('input').forEach(input => {
+            if (input.type == "checkbox") {
+                input.checked = false;
+            } else {
+                input.value = "";
+            }
+        });
+
+        return this.loadUrl(url.pathname.split('?')[0]);
     }
 
     /**
@@ -119,7 +137,7 @@ export default class Filter {
         /* On ajoute les paramètre Get  avec les données de laa constante formData */
         formData.forEach((value, key) => {
             params.append(key, value);
-        })
+        });
 
         return this.loadUrl(url.pathname + '?' + params.toString());
     }
@@ -149,11 +167,7 @@ export default class Filter {
             const data = await response.json();
 
             /* On ajoute le contenu aux articles si append === true */
-            if (append) {
-                this.content.innerHTML += data.content;
-            } else {
-                this.content.innerHTML = data.content;
-            }
+            this.flipContent(data.content, append);
 
             this.sorting.innerHTML = data.sortable;
             this.count.innerHTML = data.count;
@@ -174,6 +188,87 @@ export default class Filter {
         } else {
             console.error(response);
         }
+    }
+
+    /**
+     * Replace element on content with animation
+     * 
+     * @param {string} content 
+     * @param {boolean} append 
+     */
+    flipContent(content, append) {
+        /* On définit le nom de la configuration d'animation */
+        const springName = 'veryGentle';
+
+        /* On configure l'animation de sortie des éléments */
+        const exitSpring = (element, index, onComplete) => {
+            spring({
+                config: 'stiff',
+                values: {
+                    translateY: [0, 20],
+                    opacity: [1, 0],
+                },
+                onUpdate: ({ translateY, opacity }) => {
+                    element.style.opacity = opacity;
+                    element.style.transform = `translateY(${translateY}px)`
+                },
+                delay: index * 10,
+                onComplete,
+            });
+        }
+
+        /* On configure l'animation d'entrée des éléments */
+        const appearSpring = (element, index) => {
+            spring({
+                config: 'stiff',
+                values: {
+                    translateY: [20, 0],
+                    opacity: [0, 1],
+                },
+                onUpdate: ({ translateY, opacity }) => {
+                    element.style.opacity = opacity;
+                    element.style.transform = `translateY(${translateY}px)`;
+                },
+                delay: index * 10,
+            });
+        }
+
+        /* On instancie la classe Flipper en lui passant le content */
+        const flipper = new Flipper({
+            element: this.content,
+        });
+
+        /* On enregistre la position de chaque card actuelle (sans modification) */
+        this.content.querySelectorAll('.blog-card').forEach((card) => {
+            flipper.addFlipped({
+                element: card,
+                flipId: card.id,
+                spring: springName,
+                onExit: exitSpring,
+            });
+        });
+
+        flipper.recordBeforeUpdate();
+
+        /* On met à jour le content en JS seulment */
+        if (append) {
+            this.content.innerHTML += content;
+        } else {
+            this.content.innerHTML = content;
+        }
+
+        /* On réindex les card du contenu modifié */
+        this.content.querySelectorAll('.blog-card').forEach((card) => {
+            flipper.addFlipped({
+                element: card,
+                flipId: card.id,
+                spring: springName,
+                onAppear: appearSpring,
+            });
+        });
+
+        /* On met à jour le contenu sur la page */
+        flipper.update();
     }
 
     /**
