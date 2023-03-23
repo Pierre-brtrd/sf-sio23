@@ -65,13 +65,20 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findSearchData(SearchData $search): PaginationInterface
+    public function findSearchData(SearchData $search, bool $active = true): PaginationInterface
     {
         $query = $this->createQueryBuilder('a')
             ->select('a', 'u', 'c', 'i')
             ->join('a.author', 'u')
             ->leftJoin('a.categories', 'c')
             ->leftJoin('a.images', 'i');
+
+        if ($active) {
+            $query->andWhere('a.enabled = true');
+        } elseif (!empty($search->getEnabled())) {
+            $query->andWhere('a.enabled IN (:enabled)')
+                ->setParameter('enabled', $search->getEnabled());
+        }
 
         /* On filtre sur le titre de l'article si $search->getQuery() n'est pas vide */
         if (!empty($search->getQuery())) {

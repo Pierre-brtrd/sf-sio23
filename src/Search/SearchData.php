@@ -36,6 +36,13 @@ class SearchData
     private ?array $authors = [];
 
     /**
+     * Filter for enabled article 
+     *
+     * @var array|null
+     */
+    private ?array $enabled = [];
+
+    /**
      * Get the value of author
      */
     public function getAuthors()
@@ -121,6 +128,30 @@ class SearchData
     public function setPage(?int $page): self
     {
         $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of enabled
+     *
+     * @return ?array
+     */
+    public function getEnabled(): ?array
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set the value of enabled
+     *
+     * @param ?array $enabled
+     *
+     * @return self
+     */
+    public function setEnabled(?array $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }

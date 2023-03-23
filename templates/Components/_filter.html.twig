@@ -14,6 +14,11 @@
 <h3 class="mb-2">Auteurs</h3>
 {{ form_row(form.authors, {'attr': {'class': 'filter-choice d-flex flex-wrap gap-2'}}) }}
 
+{% if app.request.get('_route') == 'admin.article.index' %}
+	<h3 class="mb-2">Visibilité</h3>
+	{{ form_row(form.enabled, {'attr': {'class': 'filter-choice d-flex flex-wrap gap-2'}}) }}
+{% endif %}
+
 <button type="reset" class="btn btn-primary" id="btn-reset-filter">Reinitialiser les filtres</button>
 
 {{ form_end(form, {render_rest: false}) }}

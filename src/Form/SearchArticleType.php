@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class SearchArticleType extends AbstractType
 {
@@ -49,6 +50,16 @@ class SearchArticleType extends AbstractType
                 'choice_label' => 'fullName',
                 'multiple' => true,
                 'expanded' => true,
+            ])
+            ->add('enabled', ChoiceType::class, [
+                'label' => false,
+                'required' => false,
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'expanded' => true,
+                'multiple' => true,
             ]);
     }
 

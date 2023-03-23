@@ -16,16 +16,28 @@
 {% endblock %}
 
 {% block body %}
-	<section class="container mt-4">
+	<section class="container mt-4 js-filter">
 		<h1 class="text-center">Administration des articles</h1>
-		<a href="{{ path('admin.article.create') }}" class="btn btn-primary">
+		<a href="{{ path('admin.article.create') }}" class="btn btn-primary mb-2">
 			<i class="bi bi-plus"></i>
 			Créer un article
 		</a>
-		<div class="mt-4 blog-list">
-			{% for article in articles %}
-				{% include 'Components/_cardArticle.html.twig' %}
-			{% endfor %}
+		<div class="row">
+			<div class="col-md-3">
+				{% include 'Components/_filter.html.twig' with {form: form} only %}
+			</div>
+			<div class="col-md-9">
+				<div class="d-flex justify-content-between mb-2 sortable-blog-list">
+					{% include 'Components/_count.html.twig' %}
+					<div class="d-flex justify-content-end gap-2 js-filter-sorting">
+						{% include 'Components/_sortable.html.twig' %}
+					</div>
+				</div>
+				<div class="blog-list js-filter-content">
+					{% include 'Components/_articles.html.twig' %}
+				</div>
+				{% include 'Components/_pagination.html.twig' %}
+			</div>
 		</div>
 	</section>
 {% endblock %}
