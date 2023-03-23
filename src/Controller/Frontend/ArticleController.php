@@ -12,6 +12,7 @@ use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -25,7 +26,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('', name: 'app.article.index', methods: ['GET'])]
-    public function index(Request $request): Response
+    public function index(Request $request): Response|JsonResponse
     {
         $data = (new SearchData())
             ->setPage($request->get('page', 1));
@@ -33,8 +34,29 @@ class ArticleController extends AbstractController
         $form = $this->createForm(SearchArticleType::class, $data);
         $form->handleRequest($request);
 
+        $articles = $this->repo->findSearchData($data);
+
+        /* On vérifie si nous sommes dans le cadre d'une requête ajax */
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_articles.html.twig', [
+                    'articles' => $articles,
+                ]),
+                'sortable' => $this->renderView('Components/_sortable.html.twig', [
+                    'articles' => $articles,
+                ]),
+                'count' => $this->renderView('Components/_count.html.twig', [
+                    'articles' => $articles,
+                ]),
+                'pagination' => $this->renderView('Components/_pagination.html.twig', [
+                    'articles' => $articles,
+                ]),
+                'pages' => ceil($articles->getTotalItemCount() / $articles->getItemNumberPerPage()),
+            ]);
+        }
+
         return $this->render('Frontend/Article/index.html.twig', [
-            'articles' => $this->repo->findSearchData($data),
+            'articles' => $articles,
             'form' => $form,
         ]);
     }

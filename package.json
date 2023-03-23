@@ -28,6 +28,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "lodash": "^4.17.21",
         "swiper": "^9.1.0"
     }
 }
