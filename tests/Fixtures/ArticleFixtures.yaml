@@ -3,6 +3,14 @@ include:
     - UserFixtures.yaml
 
 App\Entity\Article:
+    articleName:
+        title (unique): "Article de test"
+        content: <paragraphs(4, true)>
+        enabled: <boolean()>
+        categories: <numberBetween(1, 10)>x @categorie*
+        author: <randomElement([@userAdmin, <randomElement(@user{1..10})>])>
+        createdAt: <generateDate()>
+
     article{1..20}:
         title (unique): <word(2)>
         content: <paragraphs(4, true)>
