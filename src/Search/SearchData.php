@@ -121,7 +121,7 @@ class SearchData
     /**
      * Set the value of page
      *
-     * @param ?int $query
+     * @param ?int $page
      *
      * @return self
      */

@@ -151,6 +151,7 @@ export default class Filter {
     async loadUrl(url, append = false) {
         /* On affiche le loader */
         this.showLoader();
+        this.content.classList.remove('content-response');
 
         /* On stock seulement les paramètres d'url */
         const params = new URLSearchParams(url.split('?')[1] || '');
@@ -171,6 +172,8 @@ export default class Filter {
 
             this.sorting.innerHTML = data.sortable;
             this.count.innerHTML = data.count;
+
+            this.content.classList.add('content-response');
 
             if (!this.moreNav) {
                 this.pagination.innerHTML = data.pagination;

@@ -14,7 +14,7 @@ App\Entity\Article:
     article{1..20}:
         title (unique): <word(2)>
         content: <paragraphs(4, true)>
-        enabled: <boolean()>
+        enabled: true
         categories: <numberBetween(1, 10)>x @categorie*
         author: <randomElement([@userAdmin, <randomElement(@user{1..10})>])>
         createdAt: <generateDate()>
