@@ -1,0 +1,65 @@
+<header class="sticky-top">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-sticky">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="{{ path('app.front.home') }}">My app Symfony</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item">
+						<a class="nav-link {{ app.request.get('_route') == 'app.front.home' ? 'active' }}" href="{{ path('app.front.home') }}">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{ app.request.get('_route') == 'app.article.index' ? 'active' }}" href="{{ path('app.article.index') }}">Articles</a>
+					</li>
+				</ul>
+				{% if app.user %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<div class="navbar-btn me-2">
+							<div class="dropdown open">
+								<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="bi bi-tools"></i>
+									Admin
+								</button>
+								<div class="dropdown-menu" aria-labelledby="triggerId">
+									<a class="dropdown-item" href="{{ path('admin.article.index') }}">
+										<i class="bi bi-newspaper"></i>
+										Articles
+									</a>
+									<a class="dropdown-item" href="{{ path('admin.categorie.index') }}">
+										<i class="bi bi-tags-fill"></i>
+										Catégorie
+									</a>
+									<a class="dropdown-item" href="{{ path('admin.user.index') }}">
+										<i class="bi bi-person-gear"></i>
+										Utilisateurs
+									</a>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+					<div class="navbar-btn">
+						<a href="{{ path('logout') }}" class="btn btn-danger text-light">
+							<i class="bi bi-door-open-fill"></i>
+							Se deconnecter
+						</a>
+					</div>
+				{% else %}
+					<div class="navbar-btn me-2">
+						<a href="{{ path('app.register') }}" class="btn btn-light">
+							<i class="bi bi-person-plus"></i>
+							S'inscrire
+						</a>
+					</div>
+					<div class="navbar-btn">
+						<a href="{{ path('app.login') }}" class="btn btn-secondary">
+							<i class="bi bi-box-arrow-in-right"></i>
+							Se connecter
+						</a>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</nav>
+</header>

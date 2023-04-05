@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Création d'un article
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<div class="card p-3 w-75 mx-auto">
+			<h1 class="text-center">Création article</h1>
+			{% include "Backend/Article/_form.html.twig" with {button_label: 'Créer'} %}
+		</div>
+	</section>
+{% endblock %}

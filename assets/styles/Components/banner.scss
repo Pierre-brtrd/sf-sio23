@@ -1,0 +1,21 @@
+.banner-image {
+    @include flexbox(center, center);
+    height: calc(80vh - 60px);
+    background-size: cover;
+    background-position: center;
+
+    .banner-header {
+        padding: 1.5em 2em;
+        border-radius: $border-radius;
+        border: 1px solid #ffffff4d;
+        background: rgba(27, 39, 49, 0.6);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+
+        h1 {
+            color: $secondary;
+            font-size: 3em;
+        }
+    }
+}

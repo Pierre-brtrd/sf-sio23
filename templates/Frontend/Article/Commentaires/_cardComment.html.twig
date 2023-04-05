@@ -1,0 +1,35 @@
+<div class="card-comment">
+	<div class="card-comment-header">{{ comment.title }}</div>
+	<div class="card-comment-content">
+		<em class="card-text">{{ comment.user.fullName }}</em>
+		<p class="card-text">{{ comment.content }}</p>
+		<div class="card-comment-ratings">
+			{% for number in range(1, 5) %}
+				{% if number <= comment.grade %}
+					<i class="bi bi-star-fill"></i>
+				{% else %}
+					<i class="bi bi-star"></i>
+				{% endif %}
+			{% endfor %}
+		</div>
+		{% if app.request.get('_route') == 'admin.comment.index' %}
+			<div class="form-check form-switch">
+				<input class="form-check-input" data-switch-enabled type="checkbox" value="{{ comment.id }}" {{ comment.enabled ? 'checked'}}>
+				<label class="form-check-label" for="flexSwitchCheckDefault">Actif</label>
+			</div>
+
+
+			<form method="POST" action="{{ path('admin.comment.delete', {id: comment.id}) }}" onsubmit="return confirm('êtes-vous sûr de supprimer ce commentaire ?')">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+
+				<button class="btn btn-danger">
+					<i class="bi bi-trash3"></i>
+					Supprimer</button>
+
+			</form>
+		{% endif %}
+		<p class="card-text">
+			<small class="text-muted">{{ comment.createdAt|ago }}</small>
+		</p>
+	</div>
+</div>

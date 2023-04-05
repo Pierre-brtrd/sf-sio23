@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Admin des Commentaires
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('admin')}}
+	{{ parent()}}
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('admin')}}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<h1 class="text-center">Administration des commentaires</h1>
+		{% if article.comments is not empty %}
+			<div class="show-comments">
+				<div class="comments-list">
+					{% for comment in article.comments %}
+						{% include "Frontend/Article/Commentaires/_cardComment.html.twig" %}
+					{% endfor %}
+				</div>
+			</div>
+			{% else %}
+
+		{% endif %}
+	</section>
+
+{% endblock %}

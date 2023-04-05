@@ -1,0 +1,25 @@
+<aside class="sidebar">
+	<div class="sidebar-content">
+		<div class="article-information">
+			<h2>Informations:</h2>
+			<p>
+				<i class="bi bi-calendar2-week-fill"></i>
+				<strong>{{ article.createdAt|format_datetime('full', 'none') }}</strong>
+			</p>
+		</div>
+		{% if article.categories|length > 0 %}
+			<div class="article-tag">
+				<h2>Catégories:</h2>
+				<div class="list-tag">
+					{% for categorie in article.categories %}
+						<p class="tag">
+							<i class="bi bi-tags-fill"></i>
+							{{ categorie.title }}
+						</p>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+		{% include 'Frontend/Article/Commentaires/_comments.html.twig' with {sidebar: true} %}
+	</div>
+</aside>

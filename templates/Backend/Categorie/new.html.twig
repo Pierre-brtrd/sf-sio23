@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Création d'une catégorie
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<div class="card p-3 w-75 mx-auto">
+			<h1 class="text-center">Création d'une catégorie</h1>
+
+			{{ include('Backend/Categorie/_form.html.twig', {'button_label': 'Créer'}) }}
+
+			<div class="d-flex gap-4">
+				<a href="{{ path('admin.categorie.index') }}" class="btn btn-warning">Retour à la liste</a>
+			</div>
+		</div>
+	</section>
+{% endblock %}

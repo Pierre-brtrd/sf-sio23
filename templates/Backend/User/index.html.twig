@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Administration des users
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<h1 class="text-center">Administration des users</h1>
+		<a href="{{ path('app.register') }}" class="btn btn-primary mt-2">
+			<i class="bi bi-plus"></i>
+			Créer un user
+		</a>
+		<table class="table mt-4">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Email</th>
+					<th>Prénom</th>
+					<th>Nom</th>
+					<th>Roles</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in users %}
+					<tr>
+						<td>{{ user.id }}</td>
+						<td>{{ user.email }}</td>
+						<td>{{ user.firstName }}</td>
+						<td>{{ user.lastName }}</td>
+						<td>{{ user.roles|json_encode }}</td>
+						<td>
+							<div class="d-flex gap-5">
+								<a href="{{ path('admin.user.update', {id: user.id}) }}" class="btn btn-warning">
+									<i class="bi bi-pencil-square"></i>
+									Modifier
+								</a>
+								{% include 'Backend/User/_deleteForm.html.twig' %}
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</section>
+{% endblock %}

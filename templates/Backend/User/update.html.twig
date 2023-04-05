@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Modification d'un user
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<div class="card p-3 w-50 mx-auto">
+			<h1 class="text-center">Modifier un user</h1>
+			{% include 'Backend/User/_form.html.twig' with {button_label: "Modifier"} %}
+
+			<div class="d-flex gap-4">
+				<a href="{{ path('admin.user.index') }}" class="btn btn-warning">
+					<i class="bi bi-arrow-return-left"></i>
+					Retour à la liste
+				</a>
+			</div>
+		</div>
+	</section>
+{% endblock %}

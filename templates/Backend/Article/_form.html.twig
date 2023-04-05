@@ -1,0 +1,32 @@
+{{ form_start(form, {'attr': {'class': 'form-article'} }) }}
+
+<div class="row align-items-center">
+	<div class="col-md-6">{{ form_row(form.title) }}</div>
+	<div class="col-md-6">{{ form_widget(form.enabled) }}</div>
+</div>
+{{ form_row(form.categories) }}
+
+<div class="row mb-3">
+	<fieldset class="col-md-12">
+		{{ form_label(form.images) }}
+		<ul id="image-fields-list" class="d-flex flex-wrap justify-content-between" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}" data-widget-tags="{{ '<li class="w-30 image-fields"></li>'|e }}" data-widget-counter="{{ form.images|length }}">
+			{% for imageField in form.images %}
+				<li class="w-30 list-image">
+					<a class="js-remove-image btn btn-danger">
+						<i class="bi bi-x-octagon-fill"></i>
+					</a>
+					{{ form_errors(imageField) }}
+					{{ form_widget(imageField) }}
+				</li>
+			{% endfor %}
+		</ul>
+		<button type="button" class="btn btn-primary add-another-collection-widget" data-list-selector="#image-fields-list">Ajouter une image</button>
+	</fieldset>
+</div>
+
+{{ form_row(form.content) }}
+
+<div class="text-center">
+	<button type="submit" class="btn btn-primary text-center">{{ button_label|default('Save') }}</button>
+</div>
+{{ form_end(form) }}

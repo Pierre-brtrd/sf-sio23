@@ -2,21 +2,45 @@
     "devDependencies": {
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
+        "@commitlint/cli": "^17.5.0",
+        "@commitlint/config-conventional": "^17.4.4",
+        "@commitlint/cz-commitlint": "^17.5.0",
         "@hotwired/stimulus": "^3.0.0",
+        "@popperjs/core": "^2.11.6",
         "@symfony/stimulus-bridge": "^3.2.0",
+        "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
         "@symfony/webpack-encore": "^4.0.0",
+        "bootstrap": "^5.2.3",
+        "bootstrap-icons": "^1.10.3",
+        "commitizen": "^4.3.0",
         "core-js": "^3.23.0",
+        "husky": "^8.0.3",
+        "jquery": "^3.6.3",
         "regenerator-runtime": "^0.13.9",
+        "sass": "^1.58.0",
+        "sass-loader": "^13.0.0",
+        "tom-select": "^2.2.2",
         "webpack": "^5.74.0",
         "webpack-cli": "^4.10.0",
         "webpack-notifier": "^1.15.0"
     },
     "license": "UNLICENSED",
     "private": true,
+    "config": {
+        "commitizen": {
+            "path": "@commitlint/cz-commitlint"
+        }
+    },
     "scripts": {
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
-        "build": "encore production --progress"
+        "build": "encore production --progress",
+        "postinstall": "husky install"
+    },
+    "dependencies": {
+        "flip-toolkit": "^7.0.17",
+        "lodash": "^4.17.21",
+        "swiper": "^9.1.0"
     }
 }

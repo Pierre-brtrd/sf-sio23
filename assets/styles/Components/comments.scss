@@ -1,0 +1,30 @@
+.show-comments {
+    margin-bottom: 3rem;
+
+    .sidebar-list {
+        padding-right: 1em;
+        .card-comment:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    .comments-list {
+        @include flexbox(flex-start, center, 1rem);
+    }
+
+    .card-comment {
+        border: 1px solid $secondary;
+        border-radius: $border-radius;
+        overflow: hidden;
+
+        &-header {
+            background: $primary;
+            padding: 5px 10px;
+            color: $white;
+        }
+
+        &-content {
+            padding: 1rem;
+        }
+    }
+}

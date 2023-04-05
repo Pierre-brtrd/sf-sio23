@@ -1,0 +1,4 @@
+App\Entity\Categorie:
+    categorie{1..10}:
+        title (unique): <randomTag()>
+        enabled: true

@@ -1,0 +1,68 @@
+.form-filter {
+    position: sticky;
+    top: 4.5rem;
+
+    .loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+    }
+
+    &.is-loading::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $white;
+        opacity: 0.5;
+        z-index: 1;
+    }
+
+    .filter-choice {
+        .form-check {
+            @include flexbox(flex-start, center, 5px);
+        }
+    }
+}
+
+.js-filter-pagination ul {
+    justify-content: center !important;
+}
+
+.article-main-content {
+    @include flexbox(space-between, flex-start);
+
+    .sidebar {
+        flex: 0 0 30%;
+        position: sticky;
+        display: block;
+        top: 4.5rem;
+        height: 100vh;
+        overflow: scroll;
+
+        .sidebar-content {
+            .article-tag {
+                .list-tag {
+                    @include flexbox(flex-start, flex-start, 1em 0.5em);
+                    margin-top: 1em;
+
+                    .tag {
+                        background: $secondary;
+                        padding: 5px 10px;
+                        border-radius: $border-radius;
+                        color: $white;
+                        box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
+                    }
+                }
+            }
+        }
+    }
+
+    .article-content {
+        flex: 0 0 65%;
+    }
+}

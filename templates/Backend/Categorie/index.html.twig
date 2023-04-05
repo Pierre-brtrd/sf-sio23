@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Admin Categorie
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('admin') }}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<h1 class="text-center">Administration des catégories</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Titre</th>
+					<th>Actif</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for categorie in categories %}
+					<tr>
+						<td>{{ categorie.id }}</td>
+						<td>{{ categorie.title }}</td>
+						<td>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" data-switch-active-tag value="{{ categorie.id }}" {{ categorie.enabled ? 'checked' }}>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex gap-5">
+								<a class="btn btn-warning" href="{{ path('admin.categorie.update', {id: categorie.id}) }}">
+									<i class="bi bi-pencil-square"></i>
+									Modifier
+								</a>
+								{% include 'Backend/Categorie/_delete_form.html.twig' %}
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="3">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a class="btn btn-primary" href="{{ path('admin.categorie.create') }}">
+			<i class="bi bi-plus"></i>
+			Créer une Catégorie
+		</a>
+	</section>
+{% endblock %}
